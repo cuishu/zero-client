@@ -1,0 +1,61 @@
+/**
+* 这是注释
+* 这也是注释
+*
+* sdfadsfasdf
+*/
+syntax = "v1"
+
+info (
+	title: // TODO: add title
+	desc: // TODO: add description
+	author: ""
+	email: ""
+)
+
+type (
+	/**
+	* 这是注释1
+	* 这也是注释
+	*/
+	addReq {
+		/**
+		* 这是filed注释
+		*/
+		Book  string `form:"book"`
+		Price int64  `form:"price"`
+	}
+
+	/**
+	* 这是注释2
+	* 这也是注释
+	*/
+	addResp {
+		Ok bool `json:"ok"`
+	}
+)
+
+type (
+	checkReq {
+		Book string `form:"book"`
+	}
+
+	checkResp {
+		Found bool  `json:"found"`
+		Price int64 `json:"price"`
+	}
+)
+
+/**
+* 这是service注释
+*/
+service oss-api {
+	/**
+     * 这是函数注释
+     */
+	@handler AddHandler
+	get /add (addReq) returns (addResp)
+	
+	@handler CheckHandler
+	get /check (checkReq) returns (checkResp)
+}
