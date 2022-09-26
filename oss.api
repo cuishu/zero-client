@@ -9,8 +9,9 @@ syntax = "v1"
 info (
 	title: // TODO: add title
 	desc: // TODO: add description
-	author: ""
-	email: ""
+	author: "cuishu"
+	email: 
+	version: v1.0.0
 )
 
 type (
@@ -49,7 +50,7 @@ type (
 /**
 * 这是service注释
 */
-service oss-api {
+service ossapi {
 	/**
      * 这是函数注释
      */

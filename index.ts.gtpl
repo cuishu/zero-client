@@ -28,9 +28,11 @@ class {{.ApiName}} {
     }
     {{range .Route}}
     {{range .Doc}}{{.}}{{end}}
-    function {{.FuncName}}(req {{.Request}}) : Promise<{{.Response}}, any> {
+    public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}> {
         return new Promise((reslove, reject)=>{
-            fetch(this.host+'{{.Path}}')
+            fetch(`${this.host}{{.Path}}`, {
+                method: '{{.Method}}'
+            }).then(data=>data.json()).then(data=>reslove(data)).catch(err=>reject(err))
         });
     }
     {{end}}

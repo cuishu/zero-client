@@ -4,6 +4,7 @@ import "github.com/zeromicro/go-zero/tools/goctl/api/spec"
 
 type Route struct {
 	FuncName string
+	Method string
 	Request string
 	Response string
 	Path string

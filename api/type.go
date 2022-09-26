@@ -31,6 +31,8 @@ func goTypeToTsType(t string) string {
 		"uint", "uint8", "uint16", "uint32", "uint64",
 		"float32", "float64":
 		return "number"
+	case "bool":
+		return "boolean"
 	default:
 		return t
 	}
