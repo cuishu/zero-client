@@ -25,6 +25,7 @@ type (
 		*/
 		Book  string `form:"book"`
 		Price int64  `form:"price"`
+		N []uint64 `form:"N"`
 	}
 
 	/**

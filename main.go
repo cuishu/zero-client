@@ -1,10 +1,9 @@
 package main
 
 import (
-	"bytes"
 	_ "embed"
 	"flag"
-	"io/ioutil"
+	"io"
 	"os"
 	"path"
 	"strings"
@@ -47,12 +46,20 @@ func parseIndexTemplate(apiSpec api.Spec) {
 	if err != nil {
 		panic(err)
 	}
-	var buffer bytes.Buffer
-	indexTmpl.Execute(&buffer, apiSpec)
-	err = ioutil.WriteFile(path.Join(outpath, "index.ts"), buffer.Bytes(), 0644)
-	if err != nil {
-		panic(err)
+
+	var w io.Writer = os.Stdout
+
+	if outpath != "" {
+		var file *os.File
+		if file, err = os.OpenFile(path.Join(outpath, "index.ts"),
+			os.O_CREATE|os.O_WRONLY, 0644); err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		w = file
 	}
+	indexTmpl.Execute(w, apiSpec)
 }
 
 func parsePackageTemplate(apiSpec api.Spec) {
@@ -60,9 +67,19 @@ func parsePackageTemplate(apiSpec api.Spec) {
 	if err != nil {
 		panic(err)
 	}
-	var buffer bytes.Buffer
-	pkgTmpl.Execute(&buffer, apiSpec)
-	ioutil.WriteFile(path.Join(outpath, "package.json"), buffer.Bytes(), 0644)
+	var w io.Writer = os.Stdout
+
+	if outpath != "" {
+		var file *os.File
+		if file, err = os.OpenFile(path.Join(outpath, "package.json"),
+			os.O_CREATE|os.O_WRONLY, 0644); err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		w = file
+	}
+	pkgTmpl.Execute(w, apiSpec)
 }
 
 func parseTsconfigTemplate(apiSpec api.Spec) {
@@ -70,9 +87,19 @@ func parseTsconfigTemplate(apiSpec api.Spec) {
 	if err != nil {
 		panic(err)
 	}
-	var buffer bytes.Buffer
-	tscTmpl.Execute(&buffer, apiSpec)
-	ioutil.WriteFile(path.Join(outpath, "tsconfig.json"), buffer.Bytes(), 0644)
+	var w io.Writer = os.Stdout
+
+	if outpath != "" {
+		var file *os.File
+		if file, err = os.OpenFile(path.Join(outpath, "tsconfig.json"),
+			os.O_CREATE|os.O_WRONLY, 0644); err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		w = file
+	}
+	tscTmpl.Execute(w, apiSpec)
 }
 
 func main() {

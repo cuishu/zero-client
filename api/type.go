@@ -24,7 +24,7 @@ type Type struct {
 
 func goTypeToTsType(t string) string {
 	if strings.Index(t, "[]") == 0 {
-		t = fmt.Sprintf("Array<%s>", strings.TrimLeft(t, "[]"))
+		t = fmt.Sprintf("Array<%s>", goTypeToTsType(strings.TrimLeft(t, "[]")))
 	}
 	switch t {
 	case "int", "int8", "int16", "int32", "int64",
