@@ -4,14 +4,13 @@ import (
 	"fmt"
 	"strings"
 
-	ft "github.com/cuishu/functools"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
+	"github.com/cuishu/zero-api/ast"
 )
 
 type Field struct {
 	Name      string
 	Type      string
-	Documents spec.Doc
+	Documents string
 }
 
 type Type struct {
@@ -19,7 +18,7 @@ type Type struct {
 	TypeName  string
 	IsStruct  bool
 	Fields    []Field
-	Documents spec.Doc
+	Documents string
 }
 
 func goTypeToTsType(t string) string {
@@ -38,32 +37,24 @@ func goTypeToTsType(t string) string {
 	}
 }
 
-func memberToField(member spec.Member) Field {
+func memberToField(member ast.Field) Field {
 	tags := strings.Split(strings.Trim(member.Tag, "`"), " ")
 	if len(tags) == 0 {
 		return Field{}
 	}
 	return Field{
-		Name: strings.Trim(strings.Split(tags[0], ":")[1], `"`),
-		Type: goTypeToTsType(member.Type.Name()),
-		Documents: ft.Map(func(x string) string  {
-			return strings.Replace(x, "\t", "  ", -1)
-		},member.Docs),
+		Name:      strings.Trim(strings.Split(tags[0], ":")[1], `"`),
+		Type:      goTypeToTsType(member.Type),
+		Documents: member.Comment,
 	}
 }
 
-func convertSpecType(item spec.Type) Type {
+func convertSpecType(item ast.Type) Type {
 	var t Type
-	switch v := item.(type) {
-	case spec.DefineStruct:
-		t.Name = v.Name()
-		t.Documents = ft.Map(func(x string) string  {
-			return strings.Replace(x, "\t", " ", -1)
-		}, v.Docs)
-		for _, member := range v.Members {
-			t.Fields = append(t.Fields, memberToField(member))
-		}
-	default:
+	t.Name = item.Name
+	t.Documents = item.Comment
+	for _, member := range item.Fields {
+		t.Fields = append(t.Fields, memberToField(member))
 	}
 	return t
 }

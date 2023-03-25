@@ -1,63 +1,41 @@
-/**
-* 这是注释
-* 这也是注释
-*
-* sdfadsfasdf
+/*
+ 这里是 API 描述
 */
-syntax = "v1"
 
 info (
-	title: // TODO: add title
-	desc: // TODO: add description
-	author: "cuishu"
-	email: 
+	author: cuishu
+	email: required@mail.com
 	version: v1.0.0
 )
 
-type (
-	/**
-	* 这是注释1
-	* 这也是注释
-	*/
-	addReq {
-		/**
-		* 这是filed注释
-		*/
-		Book  string `form:"book"`
-		Price int64  `form:"price"`
-		N []uint64 `form:"N"`
-	}
+// 请求参数的详细描述
+type AddReq {
+	// 每个filed都需要有注释
+	Book  string `form:"book"`
+	Price int64  `form:"price"`
+	N []uint64 `form:"N"`
+}
 
-	/**
-	* 这是注释2
-	* 这也是注释
-	*/
-	addResp {
-		Ok bool `json:"ok"`
-	}
-)
+// 返回值
+type AddResp {
+	Ok bool `json:"ok"`
+}
 
-type (
-	checkReq {
-		Book string `form:"book"`
-	}
 
-	checkResp {
-		Found bool  `json:"found"`
-		Price int64 `json:"price"`
-	}
-)
+type CheckReq {
+	Book string `form:"book"`
+}
+
+type CheckResp {
+	Found bool  `json:"found"`
+	Price int64 `json:"price"`
+}
 
 /**
-* 这是service注释
+* service 需要有注释
 */
-service ossapi {
-	/**
-     * 这是函数注释
-     */
-	@handler AddHandler
-	get /add (addReq) returns (addResp)
-	
-	@handler CheckHandler
-	get /check (checkReq) returns (checkResp)
+service Example {
+	// 每个api的注释
+	@handler Add
+	get /add (AddReq) returns (AddResp)
 }

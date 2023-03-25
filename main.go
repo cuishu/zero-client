@@ -9,8 +9,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/cuishu/zero-api/ast"
 	"github.com/cuishu/zero-client/api"
-	parser "github.com/zeromicro/go-zero/tools/goctl/api/parser"
 )
 
 var (
@@ -59,7 +59,9 @@ func parseIndexTemplate(apiSpec api.Spec) {
 
 		w = file
 	}
-	indexTmpl.Execute(w, apiSpec)
+	if err := indexTmpl.Execute(w, apiSpec); err != nil {
+		panic(err)
+	}
 }
 
 func parsePackageTemplate(apiSpec api.Spec) {
@@ -103,10 +105,7 @@ func parseTsconfigTemplate(apiSpec api.Spec) {
 }
 
 func main() {
-	spec, err := parser.Parse(filename)
-	if err != nil {
-		panic(err)
-	}
+	spec := ast.Parse(filename)
 	if err := spec.Validate(); err != nil {
 		panic(err)
 	}

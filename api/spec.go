@@ -3,7 +3,7 @@ package api
 import (
 	"strings"
 
-	spec "github.com/zeromicro/go-zero/tools/goctl/api/spec"
+	"github.com/cuishu/zero-api/ast"
 )
 
 type Info struct {
@@ -14,13 +14,11 @@ type Info struct {
 	Version string
 }
 
-func toInfo(props map[string]string) Info {
+func toInfo(astInfo ast.Info) Info {
 	var info Info
-	info.Title = strings.Trim(props["title"], `"`)
-	info.Author = strings.Trim(props["author"], `"`)
-	info.Desc = strings.Trim(props["desc"], `"`)
-	info.Email = strings.Trim(props["email"], `"`)
-	info.Version = strings.Trim(props["version"], `"`)
+	info.Author = astInfo.Author
+	info.Email = astInfo.Email
+	info.Version = astInfo.Version
 	if info.Version == "" {
 		panic("Info 中缺少版本号")
 	}
@@ -28,28 +26,28 @@ func toInfo(props map[string]string) Info {
 }
 
 type Spec struct {
-	Syntax  spec.ApiSyntax
-	Info    Info
-	ApiName string
-	Types   []Type
-	Route   []Route
+	Documents string
+	Info      Info
+	ApiName   string
+	Types     []Type
+	Route     []Route
 }
 
-func ToSpec(spec *spec.ApiSpec) Spec {
+func ToSpec(spec *ast.Spec) Spec {
 	var ret Spec
-	ret.Syntax = spec.Syntax
+	ret.Documents = spec.Comment
 	ret.ApiName = spec.Service.Name
-	ret.Info = toInfo(spec.Info.Properties)
+	ret.Info = toInfo(spec.Info)
 	for _, item := range spec.Types {
 		ret.Types = append(ret.Types, convertSpecType(item))
 	}
-	for _, item := range spec.Service.Routes() {
+	for _, item := range spec.Service.Apis {
 		ret.Route = append(ret.Route, Route{
 			FuncName: item.Handler,
-			Request:  item.RequestTypeName(),
-			Response: item.ResponseTypeName(),
-			Path:     item.Path,
-			Doc:      item.HandlerDoc,
+			Request:  item.Input,
+			Response: item.Output,
+			Path:     item.URI,
+			Doc:      item.Comment,
 			Method:   strings.ToUpper(item.Method),
 		})
 	}

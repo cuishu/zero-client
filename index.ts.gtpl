@@ -1,17 +1,8 @@
-{{ range .Syntax.Doc}}
-{{.}}
-{{end}}
-
-{{ range .Syntax.Comment}}
-{{.}}
-{{end}}
-
-const syntax = {{.Syntax.Version}}
-
+{{.Documents}}
 {{range .Types}}
-{{range .Documents}}{{.}}{{end}}
+{{.Documents}}
 class {{.Name}} {
-    {{range .Fields}}{{range .Documents}}{{.}}{{end}}
+    {{range .Fields}}{{.Documents}}
     {{.Name}}: {{.Type}}
     {{end}}
     constructor({{range .Fields}}{{.Name}}: {{.Type}},{{end}}) {
@@ -27,7 +18,7 @@ class {{.ApiName}} {
         this.host = host;
     }
     {{range .Route}}
-    {{range .Doc}}{{.}}{{end}}
+    {{.Doc}}
     public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}> {
         return new Promise((reslove, reject)=>{
             fetch(`${this.host}{{.Path}}`, {
