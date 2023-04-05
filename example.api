@@ -14,6 +14,7 @@ type AddReq {
 	Book  string `form:"book"`
 	Price int64  `form:"price"`
 	N []uint64 `form:"N"`
+	File file `form:"file"`
 }
 
 // 返回值
@@ -23,7 +24,7 @@ type AddResp {
 
 
 type CheckReq {
-	Book string `form:"book"`
+	Book string `json:"book"`
 }
 
 type CheckResp {

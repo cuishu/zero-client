@@ -11,14 +11,20 @@ type Field struct {
 	Name      string
 	Type      string
 	Documents string
+	isJSON    bool
 }
 
 type Type struct {
 	Name      string
-	TypeName  string
-	IsStruct  bool
 	Fields    []Field
 	Documents string
+}
+
+func (t Type) IsJSON() bool {
+	for _, field := range t.Fields {
+		return field.isJSON
+	}
+	return false
 }
 
 func goTypeToTsType(t string) string {
@@ -32,6 +38,8 @@ func goTypeToTsType(t string) string {
 		return "number"
 	case "bool":
 		return "boolean"
+	case "file":
+		return "any"
 	default:
 		return t
 	}
@@ -42,8 +50,10 @@ func memberToField(member ast.Field) Field {
 	if len(tags) == 0 {
 		return Field{}
 	}
+	slice := strings.Split(tags[0], ":")
 	return Field{
-		Name:      strings.Trim(strings.Split(tags[0], ":")[1], `"`),
+		isJSON:    slice[0] == "json",
+		Name:      strings.Trim(slice[1], `"`),
 		Type:      goTypeToTsType(member.Type),
 		Documents: member.Comment,
 	}

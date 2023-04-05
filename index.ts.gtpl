@@ -21,9 +21,15 @@ class {{.ApiName}} {
     {{.Doc}}
     public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}> {
         return new Promise((reslove, reject)=>{
+            {{if eq .ReqType.IsJSON true}}let data = req;{{else}}
+            let data = new FormData();
+            {{range .ReqType.Fields}}data.append('{{.Name}}', req.{{.Name}});
+            {{end}}
+            {{end}}
             fetch(`${this.host}{{.Path}}`, {
-                method: '{{.Method}}'
-            }).then(data=>data.json()).then(data=>reslove(data)).catch(err=>reject(err))
+                method: '{{.Method}}',
+                data: data,
+            }).then(data=>data.json()).then(data=>reslove(data)).catch(err=>reject(err));
         });
     }
     {{end}}

@@ -52,7 +52,7 @@ func parseIndexTemplate(apiSpec api.Spec) {
 	if outpath != "" {
 		var file *os.File
 		if file, err = os.OpenFile(path.Join(outpath, "index.ts"),
-			os.O_CREATE|os.O_WRONLY, 0644); err != nil {
+			os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644); err != nil {
 			panic(err)
 		}
 		defer file.Close()
@@ -74,7 +74,7 @@ func parsePackageTemplate(apiSpec api.Spec) {
 	if outpath != "" {
 		var file *os.File
 		if file, err = os.OpenFile(path.Join(outpath, "package.json"),
-			os.O_CREATE|os.O_WRONLY, 0644); err != nil {
+			os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644); err != nil {
 			panic(err)
 		}
 		defer file.Close()
@@ -94,7 +94,7 @@ func parseTsconfigTemplate(apiSpec api.Spec) {
 	if outpath != "" {
 		var file *os.File
 		if file, err = os.OpenFile(path.Join(outpath, "tsconfig.json"),
-			os.O_CREATE|os.O_WRONLY, 0644); err != nil {
+			os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644); err != nil {
 			panic(err)
 		}
 		defer file.Close()
@@ -106,6 +106,9 @@ func parseTsconfigTemplate(apiSpec api.Spec) {
 
 func main() {
 	spec := ast.Parse(filename)
+	if spec == nil {
+		return
+	}
 	if err := spec.Validate(); err != nil {
 		panic(err)
 	}
