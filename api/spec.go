@@ -26,11 +26,12 @@ func toInfo(astInfo ast.Info) Info {
 }
 
 type Spec struct {
-	Documents string
-	Info      Info
-	ApiName   string
-	Types     []Type
-	Route     []Route
+	Documents  string
+	Info       Info
+	ApiName    string
+	Types      []Type
+	ServiceDoc string
+	Route      []Route
 }
 
 var typeMap map[string]Type
@@ -49,6 +50,7 @@ func ToSpec(spec *ast.Spec) Spec {
 		ret.Types = append(ret.Types, t)
 		typeMap[t.Name] = t
 	}
+	ret.ServiceDoc = spec.Service.Comment
 	for _, item := range spec.Service.Apis {
 		ret.Route = append(ret.Route, Route{
 			FuncName: item.Handler,

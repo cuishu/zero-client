@@ -32,8 +32,8 @@ type CheckResp {
 	Price int64 `json:"price"`
 }
 
-/**
-* service 需要有注释
+/*
+ service 需要有注释
 */
 service Example {
 	// 每个api的注释

@@ -12,6 +12,7 @@ class {{.Name}} {
 }
 {{end}}
 
+{{.ServiceDoc}}
 class {{.ApiName}} {
     host: string
     constructor(host: string) {
