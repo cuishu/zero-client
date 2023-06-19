@@ -1,2 +1,6 @@
 github.com/cuishu/zero-api v0.0.0-20230324142403-34393e747554 h1:CgpT6qMEzece/oziXjQWMtAm5ifJIfuzBJ069keW+mY=
 github.com/cuishu/zero-api v0.0.0-20230324142403-34393e747554/go.mod h1:3UW54gaBHXuJa7HEaEeIG04+gNjzLSsWKjgWxRUdt3k=
+github.com/cuishu/zero-api v0.0.0-20230520235738-316ef9bdee60 h1:NU5tcFlG4+kb6jlLaXKorYNQ78b/1Idqd0HynL9l9Pg=
+github.com/cuishu/zero-api v0.0.0-20230520235738-316ef9bdee60/go.mod h1:3UW54gaBHXuJa7HEaEeIG04+gNjzLSsWKjgWxRUdt3k=
+golang.org/x/text v0.10.0 h1:UpjohKhiEgNc0CSauXmwYftY1+LlaC75SJwh0SgCX58=
+golang.org/x/text v0.10.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
