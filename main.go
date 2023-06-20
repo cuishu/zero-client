@@ -20,6 +20,8 @@ var (
 	packageTemplate string
 	//go:embed tsconfig.json.gtpl
 	tsconfigTemplate string
+	//go:embed README.md.gtpl
+	readmeTemplate string
 )
 
 var (
@@ -104,6 +106,26 @@ func parseTsconfigTemplate(apiSpec api.Spec) {
 	tscTmpl.Execute(w, apiSpec)
 }
 
+func parseReadmeTemplate(apiSpec api.Spec) {
+	tscTmpl, err := template.New("README.md").Parse(readmeTemplate)
+	if err != nil {
+		panic(err)
+	}
+	var w io.Writer = os.Stdout
+
+	if outpath != "" {
+		var file *os.File
+		if file, err = os.OpenFile(path.Join(outpath, "README.md"),
+			os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644); err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		w = file
+	}
+	tscTmpl.Execute(w, apiSpec)
+}
+
 func main() {
 	spec := ast.Parse(filename)
 	if spec == nil {
@@ -116,4 +138,5 @@ func main() {
 	parseIndexTemplate(apiSpec)
 	parsePackageTemplate(apiSpec)
 	parseTsconfigTemplate(apiSpec)
+	parseReadmeTemplate(apiSpec)
 }

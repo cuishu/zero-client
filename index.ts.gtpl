@@ -34,7 +34,13 @@ class {{.ApiName}} {
             this.http_request(`${this.host}{{.Path}}`, {
                 method: '{{.Method}}',
                 data: data,
-            }).then(data=>data.json()).then(data=>reslove(data)).catch(err=>reject(err));
+            }).then(data=>{
+                if (data.fail) {
+                    reject(data.msg);
+                } else {
+                    reslove(data.data);
+                }
+            }).catch(err=>reject(err));
         });
     }
     {{end}}
