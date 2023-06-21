@@ -1,4 +1,4 @@
-{{.Documents}}
+{{.Comment}}
 {{range .Types}}
 {{.Documents}}
 class {{.Name}} {
@@ -23,7 +23,7 @@ class {{.ApiName}} {
         this.upload = upload;
     }
     {{range .Route}}
-    {{.Doc}}
+    {{.Comment}}
     public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}> {
         return new Promise((reslove, reject)=>{
             {{if eq .ReqType.IsJSON true}}let data = req;{{else}}

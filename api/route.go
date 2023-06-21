@@ -9,4 +9,5 @@ type Route struct {
 	ResType  Type
 	Path     string
 	Doc      string
+	Comment  string
 }

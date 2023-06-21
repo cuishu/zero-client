@@ -27,6 +27,7 @@ func toInfo(astInfo ast.Info) Info {
 
 type Spec struct {
 	Documents  string
+	Comment    string
 	Info       Info
 	ApiName    string
 	Types      []Type
@@ -42,7 +43,8 @@ func init() {
 
 func ToSpec(spec *ast.Spec) Spec {
 	var ret Spec
-	ret.Documents = spec.Comment
+	ret.Comment = spec.Comment
+	ret.Documents = strings.Trim(strings.Trim(ret.Comment, "/"), "*")
 	ret.ApiName = spec.Service.Name
 	ret.Info = toInfo(spec.Info)
 	for _, item := range spec.Types {
@@ -59,7 +61,8 @@ func ToSpec(spec *ast.Spec) Spec {
 			Response: item.Output,
 			ResType:  typeMap[item.Output],
 			Path:     item.URI,
-			Doc:      item.Comment,
+			Comment:  item.Comment,
+			Doc:      strings.Trim(strings.Trim(item.Comment, "/"), "*"),
 			Method:   strings.ToUpper(item.Method),
 		})
 	}
