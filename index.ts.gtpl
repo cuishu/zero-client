@@ -26,12 +26,16 @@ class {{.ApiName}} {
     {{.Comment}}
     public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}> {
         return new Promise((reslove, reject)=>{
-            {{if eq .ReqType.IsJSON true}}let data = req;{{else}}
-            let data = new FormData();
-            {{range .ReqType.Fields}}data.append('{{.Name}}', req.{{.Name}});
+            let url = `${this.host}{{.Path}}`;
+            {{if eq .ReqType.IsJSON true}}
+            let data = req;
+            {{if eq .Method "GET"}}
+            const query = Object.entries(data).map(x=>x.reduce((a,b)=>(`${a}=${b}`))).reduce((a,b)=>(`${a}&${b}`),'');
+            if (query != '') {
+                url += '?' + query;
+            }
             {{end}}
-            {{end}}
-            this.http_request(`${this.host}{{.Path}}`, {
+            this.http_request(url, {
                 method: '{{.Method}}',
                 data: data,
             }).then(data=>{
@@ -41,6 +45,11 @@ class {{.ApiName}} {
                     reslove(data.data);
                 }
             }).catch(err=>reject(err));
+            {{else}}
+            let data = new FormData();
+            {{range .ReqType.Fields}}data.append('{{.Name}}', req.{{.Name}});
+            {{end}}
+            {{end}}
         });
     }
     {{end}}

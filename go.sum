@@ -1,8 +1,8 @@
-github.com/cuishu/zero-api v0.0.0-20230324142403-34393e747554 h1:CgpT6qMEzece/oziXjQWMtAm5ifJIfuzBJ069keW+mY=
-github.com/cuishu/zero-api v0.0.0-20230324142403-34393e747554/go.mod h1:3UW54gaBHXuJa7HEaEeIG04+gNjzLSsWKjgWxRUdt3k=
-github.com/cuishu/zero-api v0.0.0-20230520235738-316ef9bdee60 h1:NU5tcFlG4+kb6jlLaXKorYNQ78b/1Idqd0HynL9l9Pg=
-github.com/cuishu/zero-api v0.0.0-20230520235738-316ef9bdee60/go.mod h1:3UW54gaBHXuJa7HEaEeIG04+gNjzLSsWKjgWxRUdt3k=
+github.com/cuishu/functools v0.0.0-20221026004008-beb9b9c0e338 h1:MIs3Qk6XOQX6I2ugvmri6gEdsN9Ss0IE5kJGVsJV6bo=
+github.com/cuishu/functools v0.0.0-20221026004008-beb9b9c0e338/go.mod h1:L+yg4uu+GXqiH05ltA2CuS+SAhMRW4JyRrrNZO8Y2Uo=
 github.com/cuishu/zero-api v0.0.0-20230623070333-045b0e9e6ef2 h1:q6vjoANIfnk1PzM2vFUjZvcoaMVYXiuoLQVTk9zuAGA=
 github.com/cuishu/zero-api v0.0.0-20230623070333-045b0e9e6ef2/go.mod h1:3UW54gaBHXuJa7HEaEeIG04+gNjzLSsWKjgWxRUdt3k=
+github.com/cuishu/zero-api v0.0.0-20230623142843-8c8a0dcfd9d1 h1:Miyt4DB8XlNg6yvue2euJY/tySIdvLF1pwKlZT7cz0c=
+github.com/cuishu/zero-api v0.0.0-20230623142843-8c8a0dcfd9d1/go.mod h1:3UW54gaBHXuJa7HEaEeIG04+gNjzLSsWKjgWxRUdt3k=
 golang.org/x/text v0.10.0 h1:UpjohKhiEgNc0CSauXmwYftY1+LlaC75SJwh0SgCX58=
 golang.org/x/text v0.10.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
