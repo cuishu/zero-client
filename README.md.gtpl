@@ -31,6 +31,11 @@ const client = new {{.ApiName}}(host, http_request_function, upload_function);
 {{range .Route}}
 {{.Doc}}
 ```javascript
+class {{.ReqType.Name}} {
+    {{range .ReqType.Fields}}{{.Documents}}
+    {{.Name}}: {{.Type}};
+    {{end}}
+}
 const req = {{.Request}}()
 client.{{.FuncName}}(req).then(...).catch(...)
 ```
