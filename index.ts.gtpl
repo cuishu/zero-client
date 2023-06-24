@@ -2,6 +2,7 @@
 {{range .Types}}
 {{.Documents}}
 class {{.Name}} {
+    [key: string]: any;
     {{range .Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
@@ -30,7 +31,7 @@ class {{.ApiName}} {
             {{if eq .ReqType.IsJSON true}}
             let data = req;
             {{if eq .Method "GET"}}
-            const query = Object.entries(data).map(x=>x.reduce((a,b)=>(`${a}=${b}`))).reduce((a,b)=>(`${a}&${b}`),'');
+            const query = Object.keys(data).map((x:string)=>(`${x}=${data[x]}`)).join('&');
             if (query != '') {
                 url += '?' + query;
             }
@@ -38,13 +39,13 @@ class {{.ApiName}} {
             this.http_request(url, {
                 method: '{{.Method}}',
                 data: data,
-            }).then(data=>{
+            }).then((data:any)=>{
                 if (data.fail) {
                     reject(data.msg);
                 } else {
                     reslove(data.data);
                 }
-            }).catch(err=>reject(err));
+            }).catch((err:any)=>reject(err));
             {{else}}
             let data = new FormData();
             {{range .ReqType.Fields}}data.append('{{.Name}}', req.{{.Name}});
