@@ -39,7 +39,7 @@ class {{.ReqType.Name}} {
 }
 // 返回值
 class {{.ResType.Name}} {
-    {{range .ReqType.Fields}}{{.Documents}}
+    {{range .ResType.Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
 }
