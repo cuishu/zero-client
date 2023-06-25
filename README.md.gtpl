@@ -31,7 +31,14 @@ const client = new {{.ApiName}}(host, http_request_function, upload_function);
 {{range .Route}}
 {{.Doc}}
 ```javascript
+// 请求参数
 class {{.ReqType.Name}} {
+    {{range .ReqType.Fields}}{{.Documents}}
+    {{.Name}}: {{.Type}};
+    {{end}}
+}
+// 返回值
+class {{.ResType.Name}} {
     {{range .ReqType.Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
