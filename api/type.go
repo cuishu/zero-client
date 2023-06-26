@@ -50,13 +50,19 @@ func memberToField(member ast.Field) Field {
 	if len(tags) == 0 {
 		return Field{}
 	}
-	slice := strings.Split(tags[0], ":")
-	return Field{
-		isJSON:    slice[0] == "json",
-		Name:      strings.Trim(slice[1], `"`),
-		Type:      goTypeToTsType(member.Type),
-		Documents: member.Comment,
+	for _, tag := range tags {
+		slice := strings.Split(tag, ":")
+		switch slice[0] {
+		case "json", "form":
+			return Field{
+				isJSON:    slice[0] == "json",
+				Name:      strings.Trim(slice[1], `"`),
+				Type:      goTypeToTsType(member.Type),
+				Documents: member.Comment,
+			}
+		}
 	}
+	return Field{}
 }
 
 func convertSpecType(item ast.Type) Type {
