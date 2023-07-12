@@ -17,3 +17,8 @@ zero-client -f example.api
 # 输出到 client 目录
 zero-client -f example.api -o client
 ```
+
+生成 javascript 客户端代码
+```
+zero-client -f example.api -o client -js
+```
