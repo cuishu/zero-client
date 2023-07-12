@@ -5,6 +5,7 @@ import (
 	"flag"
 	"io"
 	"os"
+	"os/exec"
 	"path"
 	"strings"
 	"text/template"
@@ -14,24 +15,26 @@ import (
 )
 
 var (
-	//go:embed index.ts.gtpl
+	//go:embed template/typescript/index.ts.gtpl
 	indexTemplate string
-	//go:embed package.json.gtpl
+	//go:embed template/typescript/package.json.gtpl
 	packageTemplate string
-	//go:embed tsconfig.json.gtpl
+	//go:embed template/typescript/tsconfig.json.gtpl
 	tsconfigTemplate string
-	//go:embed README.md.gtpl
+	//go:embed template/typescript/README.md.gtpl
 	readmeTemplate string
 )
 
 var (
-	filename string
-	outpath  string
+	filename   string
+	outpath    string
+	javascript bool
 )
 
 func init() {
 	flag.StringVar(&filename, "f", "", "api filename")
 	flag.StringVar(&outpath, "o", "", "output path")
+	flag.BoolVar(&javascript, "js", false, "compile typescript")
 	flag.Parse()
 
 	if outpath != "" {
@@ -126,6 +129,15 @@ func parseReadmeTemplate(apiSpec api.Spec) {
 	tscTmpl.Execute(w, apiSpec)
 }
 
+func compileTypescript() {
+	os.Chdir(outpath)
+	cmd := exec.Command("npm", "run", "build")
+	cmd.Run()
+	os.Remove("index.ts")
+	os.Remove("tsconfig.json")
+	
+}
+
 func main() {
 	spec := ast.Parse(filename)
 	if spec == nil {
@@ -139,4 +151,8 @@ func main() {
 	parsePackageTemplate(apiSpec)
 	parseTsconfigTemplate(apiSpec)
 	parseReadmeTemplate(apiSpec)
+
+	if outpath != "" && javascript {
+		compileTypescript()
+	}
 }
