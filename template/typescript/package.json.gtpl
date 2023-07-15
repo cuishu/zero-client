@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "typescript": "^4.8.3"
+  },
+  "publishConfig": {
+    "registry": "https://npm.cuishu.site"
   }
 }

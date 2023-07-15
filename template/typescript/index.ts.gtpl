@@ -1,7 +1,7 @@
 {{.Comment}}
 {{range .Types}}
 {{.Documents}}
-class {{.Name}} {
+export class {{.Name}} {
     [key: string]: any;
     {{range .Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
@@ -14,14 +14,14 @@ class {{.Name}} {
 {{end}}
 
 {{.ServiceDoc}}
-class {{.ApiName}} {
+export default class {{.ApiName}} {
     host: string;
     http_request: any;
     upload: any;
-    constructor(host: string, http_request: any, upload: any) {
-        this.host = host;
-        this.http_request = http_request;
-        this.upload = upload;
+    constructor(conf: any) {
+        this.host = conf.host;
+        this.http_request = conf.http_request;
+        this.upload = conf.upload;
     }
     {{range .Route}}
     {{.Comment}}
