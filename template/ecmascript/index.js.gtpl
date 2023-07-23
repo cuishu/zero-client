@@ -48,9 +48,22 @@ class {{.ApiName}} {
                 }
             }).catch((err)=>reject(err));
             {{else}}
-            let data = new FormData();
-            {{range .ReqType.Fields}}data.append('{{.Name}}', req.{{.Name}});
-            {{end}}
+            this.upload(url, {
+                uri: '{{.Path}}',
+                method: '{{.Method}}',
+                {{if eq .Method "GET"}}query: query,{{end}}
+                data: data,
+            }).then((data)=>{
+                if (typeof data === "object") {
+                    if (data.fail) {
+                        reject(data.msg);
+                    } else {
+                        reslove(data.data);
+                    }
+                } else {
+                    reslove(data.data);
+                }
+            }).catch((err)=>reject(err));
             {{end}}
         });
     }
