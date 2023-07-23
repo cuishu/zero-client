@@ -2,4 +2,9 @@ module github.com/cuishu/zero-client
 
 go 1.19
 
-require github.com/cuishu/zero-api v0.0.0-20230626141230-bd8df8032e00
+require github.com/cuishu/zero-api v0.0.0-20230723095126-a644dcd40a2c
+
+require (
+	github.com/cuishu/functools v0.0.0-20221026004008-beb9b9c0e338 // indirect
+	golang.org/x/text v0.11.0 // indirect
+)

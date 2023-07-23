@@ -75,7 +75,7 @@ func (c *CodeGenerator) jsParseIndexTemplate(apiSpec Spec) {
 }
 
 func (c *CodeGenerator) jsParseReadmeTemplate(apiSpec Spec) {
-	tscTmpl, err := template.New("README.md").Parse(c.JsIndexTemplate)
+	tscTmpl, err := template.New("README.md").Parse(c.JsReadMeTemplate)
 	if err != nil {
 		panic(err)
 	}

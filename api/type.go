@@ -11,6 +11,7 @@ type Field struct {
 	Name      string
 	Type      string
 	Documents string
+	Doc       string
 	isJSON    bool
 }
 
@@ -18,6 +19,7 @@ type Type struct {
 	Name      string
 	Fields    []Field
 	Documents string
+	Doc       string
 }
 
 func (t Type) IsJSON() bool {
@@ -58,7 +60,8 @@ func memberToField(member ast.Field) Field {
 				isJSON:    slice[0] == "json",
 				Name:      strings.Trim(slice[1], `"`),
 				Type:      goTypeToTsType(member.Type),
-				Documents: member.Comment,
+				Documents: toDocument(member.Comment, 4),
+				Doc:       strings.Trim(strings.Trim(member.Comment, "/"), "*"),
 			}
 		}
 	}
@@ -68,7 +71,8 @@ func memberToField(member ast.Field) Field {
 func convertSpecType(item ast.Type) Type {
 	var t Type
 	t.Name = item.Name
-	t.Documents = item.Comment
+	t.Documents = toDocument(item.Comment, 1)
+	t.Doc = strings.TrimSpace(strings.Trim(strings.Trim(item.Comment, "/"), "*"))
 	for _, member := range item.Fields {
 		t.Fields = append(t.Fields, memberToField(member))
 	}

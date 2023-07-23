@@ -7,6 +7,9 @@ exports.DeleteResp = exports.DeleteReq = exports.AddResp = exports.AddReq = void
 {{range .Types}}
 {{.Documents}}
 class {{.Name}} {
+    /**{{range .Fields}}
+     * @param {{.Name}}: {{.Type}} {{.Doc}}{{end}}
+     */
     constructor({{range .Fields}}{{.Name}},{{end}}) {
         {{range .Fields}}this.{{.Name}} = {{.Name}};
         {{end}}

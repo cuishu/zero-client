@@ -6,6 +6,9 @@ export declare class {{.Name}} {
     {{range .Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
+    /**{{range .Fields}}
+     * @param {{.Name}} {{.Doc}}{{end}}
+     */
     constructor({{range .Fields}}{{.Name}}: {{.Type}},{{end}});
 }
 {{end}}
@@ -17,7 +20,11 @@ export default class {{.ApiName}} {
     upload: any;
     constructor(conf: any);
     {{range .Route}}
-    {{.Comment}}
+    /**
+     * {{.Doc}}
+     *
+     * @param req: {{.Request}} {{.ReqType.Doc}}
+     */
     public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}>;
     {{end}}
 }
