@@ -24,6 +24,7 @@ class {{.ApiName}} {
         this.host = conf.host;
         this.http_request = conf.http_request;
         this.upload = conf.upload;
+        this.token = conf.token;
     }
     {{range .Route}}
     {{.Comment}}
@@ -37,9 +38,13 @@ class {{.ApiName}} {
             {{end}}
             this.http_request(url, {
                 uri: '{{.Path}}',
-                method: '{{.Method}}',
-                {{if eq .Method "GET"}}query: query,{{end}}
+                method: '{{.Method}}',{{if eq .Method "GET"}}
+                query: query,{{end}}
                 data: data,
+                headers: { {{if ne .Method "GET"}}
+                    'Content-Type': 'application/json',{{end}}{{if .ValidToken}}
+                    'X-Token': this.token,{{end}}
+                },
             }).then((data)=>{
                 if (data.fail) {
                     reject(data.msg);
@@ -50,9 +55,12 @@ class {{.ApiName}} {
             {{else}}
             this.upload(url, {
                 uri: '{{.Path}}',
-                method: '{{.Method}}',
-                {{if eq .Method "GET"}}query: query,{{end}}
+                method: '{{.Method}}',{{if eq .Method "GET"}}
+                query: query,{{end}}
                 data: data,
+                headers: {
+                    'X-Token': this.token,
+                },
             }).then((data)=>{
                 if (typeof data === "object") {
                     if (data.fail) {

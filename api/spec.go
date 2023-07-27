@@ -64,15 +64,16 @@ func ToSpec(spec *ast.Spec) Spec {
 	ret.ServiceDoc = toDocument(ret.Comment, 1)
 	for _, item := range spec.Service.Apis {
 		ret.Route = append(ret.Route, Route{
-			FuncName: item.Handler,
-			Request:  item.Input,
-			ReqType:  typeMap[item.Input],
-			Response: item.Output,
-			ResType:  typeMap[item.Output],
-			Path:     item.URI,
-			Comment:  toDocument(item.Comment, 4),
-			Doc:      strings.TrimSpace(strings.Trim(strings.Trim(item.Comment, "/"), "*")),
-			Method:   strings.ToUpper(item.Method),
+			FuncName:   item.Handler,
+			Request:    item.Input,
+			ReqType:    typeMap[item.Input],
+			Response:   item.Output,
+			ResType:    typeMap[item.Output],
+			Path:       item.URI,
+			Comment:    toDocument(item.Comment, 4),
+			Doc:        strings.TrimSpace(strings.Trim(strings.Trim(item.Comment, "/"), "*")),
+			Method:     strings.ToUpper(item.Method),
+			ValidToken: item.ValidToken,
 		})
 	}
 	return ret
