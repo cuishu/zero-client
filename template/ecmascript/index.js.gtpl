@@ -77,4 +77,4 @@ class {{.ApiName}} {
     }
     {{end}}
 }
-exports.default = Example;
+exports.default = {{.ApiName}};
