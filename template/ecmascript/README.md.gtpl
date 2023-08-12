@@ -30,19 +30,32 @@ const client = new {{.ApiName}}(host, http_request_function, upload_function);
 
 {{range .Route}}
 {{.Doc}}
+**请求参数**
+|名称|类型|校验规则|说明|
+|:-:|:-:|:-:|:-:|
+{{range .ReqType.Fields}}|{{.Name}}|{{.Type}}|{{.Validate}}|{{.Doc}}|
+{{end}}
 ```javascript
-// 请求参数
 class {{.ReqType.Name}} {
     {{range .ReqType.Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
 }
-// 返回值
+```
+**返回值**
+|名称|类型|说明|
+|:-:|:-:|:-:|
+{{range .ResType.Fields}}|{{.Name}}|{{.Type}}|{{.Doc}}|
+{{end}}
+```javascript
 class {{.ResType.Name}} {
     {{range .ResType.Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
 }
+```
+
+```javascript
 const req = {{.Request}}()
 client.{{.FuncName}}(req).then(...).catch(...)
 ```

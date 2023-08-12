@@ -7,7 +7,7 @@ export declare class {{.Name}} {
     {{.Name}}: {{.Type}};
     {{end}}
     /**{{range .Fields}}
-     * @param {{.Name}} {{.Doc}}{{end}}
+     * @param {{.Name}} {{.Type}} {{.Doc}}{{end}}
      */
     constructor({{range .Fields}}{{.Name}}: {{.Type}},{{end}});
 }
@@ -23,7 +23,8 @@ export default class {{.ApiName}} {
     /**
      * {{.Doc}}
      *
-     * @param req: {{.Request}} {{.ReqType.Doc}}
+     * @param req {{.Request}} {{.ReqType.Doc}}
+     * @return {{.Response}}
      */
     public {{.FuncName}}(req: {{.Request}}) : Promise<{{.Response}}>;
     {{end}}

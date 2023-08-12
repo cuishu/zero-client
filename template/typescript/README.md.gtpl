@@ -23,26 +23,44 @@ const upload_function = (url, method, headers, data) => {
     return new Promise((reslove, reject)=>{});
 }
 
-const client = new {{.ApiName}}(host, http_request_function, upload_function);
+const config = {
+  host: 'https://ftms.qingyuantop.top',
+  http_request: fetchsomething,
+  upload: fetchsomething,
+}
+
+const client = new {{.ApiName}}(config);
 ```
 
 ## 接口文档
 
 {{range .Route}}
 {{.Doc}}
-```javascript
-// 请求参数
+
+**请求参数***
+|名称|类型|校验规则|说明|
+|:-:|:-:|:-:|:-:|
+{{range .ReqType.Fields}}|{{.Name}}|{{.Type}}|{{.Validate}}|{{.Documents}}|
+{{end}}
 class {{.ReqType.Name}} {
     {{range .ReqType.Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
 }
-// 返回值
+**返回值**
+|名称|类型|说明|
+|:-:|:-:|:-:|
+{{range .RespType.Fields}}|{{.Name}}|{{.Type}}|{{.Documents}}|
+{{end}}
+
+{{end}}
 class {{.ResType.Name}} {
     {{range .ResType.Fields}}{{.Documents}}
     {{.Name}}: {{.Type}};
     {{end}}
 }
+
+```javascript
 const req = {{.Request}}()
 client.{{.FuncName}}(req).then(...).catch(...)
 ```

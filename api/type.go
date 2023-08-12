@@ -12,6 +12,7 @@ type Field struct {
 	Type      string
 	Documents string
 	Doc       string
+	Validate  string
 	isJSON    bool
 }
 
@@ -52,20 +53,22 @@ func memberToField(member ast.Field) Field {
 	if len(tags) == 0 {
 		return Field{}
 	}
+	var field Field
+	field.Name = member.Name
+	field.Documents = toDocument(member.Comment, 4)
+	field.Doc = strings.Trim(strings.Trim(member.Comment, "/"), "*")
+	field.Type = goTypeToTsType(member.Type)
 	for _, tag := range tags {
 		slice := strings.Split(tag, ":")
 		switch slice[0] {
 		case "json", "form":
-			return Field{
-				isJSON:    slice[0] == "json",
-				Name:      strings.Trim(slice[1], `"`),
-				Type:      goTypeToTsType(member.Type),
-				Documents: toDocument(member.Comment, 4),
-				Doc:       strings.Trim(strings.Trim(member.Comment, "/"), "*"),
-			}
+			field.isJSON = slice[0] == "json"
+			field.Name = strings.Trim(slice[1], `"`)
+		case "binding":
+			field.Validate = strings.Trim(slice[1], `"`)
 		}
 	}
-	return Field{}
+	return field
 }
 
 func convertSpecType(item ast.Type) Type {
