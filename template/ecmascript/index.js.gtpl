@@ -53,6 +53,7 @@ class {{.ApiName}} {
                 }
             }).catch((err)=>reject(err));
             {{else}}
+            let data = req;
             this.upload(url, {
                 uri: '{{.Path}}',
                 method: '{{.Method}}',{{if eq .Method "GET"}}
