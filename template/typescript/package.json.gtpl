@@ -13,6 +13,6 @@
     "typescript": "^4.8.3"
   },
   "publishConfig": {
-    "registry": "https://npm.cuishu.site"
+    "registry": "https://npm.wash-painting.cn"
   }
 }
