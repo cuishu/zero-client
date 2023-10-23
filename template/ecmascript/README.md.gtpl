@@ -5,7 +5,7 @@
 ## 安装
 
 ```
-npm install --registry="https://npm.cuishu.site" {{.ApiName}}
+npm install --registry="https://npm.wash-painting.cn" {{.ApiName}}
 ```
 
 ## 用法
